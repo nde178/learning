@@ -10,7 +10,7 @@ class MyExeption extends Exception
         return ['data'=>'Данные'];
     }
     public function render(){
-        
+        return ('Прикольчик');
     }
 
 
