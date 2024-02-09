@@ -5,10 +5,10 @@ services:
   web:
     image: nginx:alpine
     container_name: web
-    restart: unless-stopped
+    restart: always
     volumes:
       - ./:/var/www
-      - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./server/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
       - "8080:80"
     depends_on:
@@ -17,7 +17,7 @@ services:
   app:
     build: 
       context: .
-      dockerfile: _docker/app/Dockerfile
+      dockerfile: server/app/Dockerfile
     container_name: app
     volumes:
       - ./:/var/www
@@ -28,7 +28,7 @@ services:
     image: mysql:8.0
     restart: always
     volumes:
-      - ./tmp/db:/var/lib/mysql
+      - ./server/app/tmp/db:/var/lib/mysql
     environment:
       MYSQL_DATABASE: lardocker
       MYSQL_ROOT_PASSWORD: root

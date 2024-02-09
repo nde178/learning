@@ -6,6 +6,7 @@
 /storage/*.key
 /vendor
 /tmp
+/db
 .env
 .env.backup
 .env.production
@@ -18,3 +19,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/server/docker-compose.yml
