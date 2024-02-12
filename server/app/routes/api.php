@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,6 @@ Route::group([
     Route::get("refresh", [AuthController::class, "refreshToken"]);
     Route::get("logout", [AuthController::class, "logout"]);
 });
+
+Route::get('/user/{id}', [UserController::class, 'getUser']);
+Route::get('/user', [UserController::class, 'getUsers']);

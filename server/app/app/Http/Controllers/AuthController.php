@@ -18,7 +18,7 @@ class AuthController extends Controller
             "login" => "required",
             "name" => "required",
             "email" => "required|email|unique:users",
-            "password" => "required",
+            "password" => "required|confirmed",
         ]);
 
         // User Model

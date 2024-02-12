@@ -18,6 +18,7 @@ services:
     build: 
       context: .
       dockerfile: server/app/Dockerfile
+    restart: always
     container_name: app
     volumes:
       - ./:/var/www
