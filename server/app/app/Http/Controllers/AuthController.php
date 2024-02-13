@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -36,35 +38,17 @@ class AuthController extends Controller
     }
 
     // User Login (POST, formdata)
-    public function login(Request $request){
-        
-        // data validation
-        $request->validate([
-            "email" => "required|email",
-            "password" => "required"
-        ]);
-
-        // JWTAuth
-        $token = JWTAuth::attempt([
-            "email" => $request->email,
-            "password" => $request->password
-        ]);
-
-        if(!empty($token)){
-
-            return response()->json([
-                "status" => true,
-                "message" => "User logged in succcessfully",
-                "token" => $token
-            ]);
+    public function login()
+        {
+            $credentials = request(['email', 'password']);
+    
+            if (! $token = auth()->attempt($credentials)) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+    
+            return $this->respondWithToken($token);
         }
-
-        return response()->json([
-            "status" => false,
-            "message" => "Invalid details"
-        ]);
-    }
-
+    
     // User Profile (GET)
     public function profile(){
 
@@ -97,6 +81,15 @@ class AuthController extends Controller
         return response()->json([
             "status" => true,
             "message" => "User logged out successfully"
+        ]);
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }

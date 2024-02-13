@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MyController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,10 @@ Route::get('/', function () {
 });
 
 Route::get('/exeption', [MyController::class,'myExeption']);
+
+Route::get('/login2',function(){
+    return view('exeption');
+});
+
+Route::post("login2", [LoginController::class, "authenticate"]);
 
