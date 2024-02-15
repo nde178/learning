@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
- 
+
+use App\Events\UserCreatedEvent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use App\Exceptions\MyExeption;
+use Illuminate\Support\Facades\Event;
 
 class AuthController extends Controller
 {
@@ -25,11 +24,12 @@ class AuthController extends Controller
         ]);
 
         // User Model
-        User::create([
+        $user=User::create([
             "name" => $request->name,
             "email" => $request->email,
             "password" => Hash::make($request->password)
         ]);
+        Event::dispatch(new UserCreatedEvent($user));
 
         // Response
         return response()->json([

@@ -13,15 +13,13 @@ use Illuminate\Queue\SerializesModels;
 
 class UserCreatedEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    
+    public $user;
 
-    /**
-     * Create a new event instance.
-     */
-    public $usernew;
-    public function __construct(User $usernew)
+    public function __construct(User $user)
     {
-        $this->usernew = $usernew;
+        $this->user = $user;
     }
 
     /**
