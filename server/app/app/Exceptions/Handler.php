@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -23,8 +24,10 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+       // $this->reportable(function (MyExeption $e) {
+       //     return response()->json([
+       //         'message'=>$e->getMessage(),
+       //     ],$e->getCode());
+       // });
     }
 }

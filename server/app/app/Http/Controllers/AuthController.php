@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
+use App\Exceptions\MyExeption;
 
 class AuthController extends Controller
 {
@@ -40,10 +41,12 @@ class AuthController extends Controller
     // User Login (POST, formdata)
     public function login()
         {
+            
             $credentials = request(['email', 'password']);
     
             if (! $token = auth()->attempt($credentials)) {
-                return response()->json(['error' => 'Unauthorized'], 401);
+                //return response()->json(['error' => 'Unauthorized'], 401);
+                throw new MyExeption();
             }
     
             return $this->respondWithToken($token);
