@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\Rest_place_Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use Orion\Facades\Orion;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +36,13 @@ Route::group([
 
 Route::get('/user/{id}', [UserController::class, 'getUser']);
 Route::get('/user', [UserController::class, 'getUsers']);
+
+
+
+#Роутер для Орион
+
+Route::group(
+    ['as' => 'api'],
+    function(){
+        Orion::resource('rest_places', Rest_place_Controller::class);
+    });

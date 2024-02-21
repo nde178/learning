@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     // User Register (POST, formdata)
     public function register(Request $request){
-        
+
         // data validation
         $request->validate([
             "login" => "required",
@@ -41,17 +41,17 @@ class AuthController extends Controller
     // User Login (POST, formdata)
     public function login()
         {
-            
+
             $credentials = request(['email', 'password']);
-    
+
             if (! $token = auth()->attempt($credentials)) {
                 //return response()->json(['error' => 'Unauthorized'], 401);
                 throw new MyExeption();
             }
-    
+
             return $this->respondWithToken($token);
         }
-    
+
     // User Profile (GET)
     public function profile(){
 
@@ -62,11 +62,11 @@ class AuthController extends Controller
             "message" => "Profile data",
             "data" => $userdata
         ]);
-    } 
+    }
 
     // To generate refresh token value
     public function refreshToken(){
-        
+
         $newToken = auth()->refresh();
 
         return response()->json([
@@ -78,7 +78,7 @@ class AuthController extends Controller
 
     // User Logout (GET)
     public function logout(){
-        
+
         auth()->logout();
 
         return response()->json([
